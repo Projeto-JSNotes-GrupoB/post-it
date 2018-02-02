@@ -14,7 +14,7 @@
             <form class="note">
                 <input class="note__title" type="text" name="titulo" placeholder="Título" autofocus />
                 <textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota..."></textarea>
-                <button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, null)">
+                <button class="note__control" type="button" onclick="adicionarNota(this.form, this.form.titulo, this.form.texto, null)">
                     Concluído
                 </button>
             </form>
@@ -24,7 +24,7 @@
 
         <!-- <script type="module" src="js/scripts-refatorado.js"></script> -->
         <!-- <script src="lib/scripts-webpack.js"></script> -->
-        <!-- <script src="lib/bundle.js"></script> -->
-        <script src="lib/scripts.js"></script>
+        <script src="lib/bundle.js"></script>
+        <!-- <script src="lib/scripts.js"></script> -->
     </body>
 </html>

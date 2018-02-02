@@ -85,3 +85,5 @@ class Pessoa {
 		return this.peso * alturaQuadrado;
     }
 }
+
+// classe para listaNotas, nota, secaoNotas, Post-It
