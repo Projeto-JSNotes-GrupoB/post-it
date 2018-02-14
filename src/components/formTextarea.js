@@ -1,21 +1,28 @@
-// props param
-function FormTextarea(props) {
-    let formTextarea = document.createElement('textarea');
+import React from 'react'
 
-    // destructuring
-    formTextarea.setAttribute('class', props.className);
-    formTextarea.setAttribute('name', props.name);
-    formTextarea.setAttribute('rows', props.rows);
-    formTextarea.setAttribute('placeholder', props.placeholder);
+export default props => React.createElement('textarea', props)
 
-    // qualquer valor é true
-    if (props.readonly) {
-        formTextarea.setAttribute('readonly', true);
-    }
+
+
+
+// // props param
+// function FormTextarea(props) {
+//     let formTextarea = document.createElement('textarea');
+
+//     // destructuring
+//     formTextarea.setAttribute('class', props.className);
+//     formTextarea.setAttribute('name', props.name);
+//     formTextarea.setAttribute('rows', props.rows);
+//     formTextarea.setAttribute('placeholder', props.placeholder);
+
+//     // qualquer valor é true
+//     if (props.readonly) {
+//         formTextarea.setAttribute('readonly', true);
+//     }
     
-    formTextarea.innerHTML = props.children;
+//     formTextarea.innerHTML = props.children;
 
-    return formTextarea;
-}
+//     return formTextarea;
+// }
 
-export default FormTextarea;
+// export default FormTextarea;
