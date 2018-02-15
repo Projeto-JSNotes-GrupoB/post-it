@@ -51,7 +51,7 @@ function criaTextareaTexto(notaAlterada) {
     };
 
     return React.createElement(FormTextarea, props)
-};
+}
 
 // const criaTextareaTexto = ({ notaAtual }) => {
 //     // immutable
@@ -67,18 +67,16 @@ function criaTextareaTexto(notaAlterada) {
 //     return new FormTextarea(props);
 // };
 
-function criaButtonConcluir(adicionarNota, posicao, notaAlterada, formNotas) {
+function criaButtonConcluir(adicionarNota, posicao, notaAlterada) {
     // immutable
     const props = {
         className: 'note__control',
         type: 'button',
-        onClick: () => adicionarNota(notaAlterada.titulo, notaAlterada.texto, formNotas, posicao)
+        onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, posicao) // target guarda a tag que sofreu o evento
     }
     const children = 'Concluído'
-    }
-
     return React.createElement(FormButton, props, children)
-};
+}
 
 // const criaButtonConcluir = ({ posicao, nota, adicionarNota, salvarNota }, inputTitulo, textareaTexto, formNotas) => {
 //     // immutable
@@ -102,12 +100,10 @@ function criaButtonRemover(posicao, removerNota) {
 
     const children = React.createElement('i', {
         className: 'fa fa-times',
-       'aria-hidden': true, 
-        })
-    };
-
+        'aria-hidden': true,
+    });
     return React.createElement(FormButton, props);
-};
+}
 
 // const criaButtonRemover = ({ posicao, removerNota}) => {
 //     // immutable
@@ -146,32 +142,25 @@ function criaButtonRemover(posicao, removerNota) {
 //     let formNotas = new Form(props);
 
 
-function FormNotas(props) {
-    let notaAlterada = new Nota(props.notaAtual.titulo, props.notaAtual.texto, props.notaAtual.editando)
+function FormNotas({ notaAtual, posicao, adicionarNota, removerNota, editarFormulario }) { // destructuring do props
+    // const {notaAtual,posicao, adicionarNota, removerNota, editarFormulario} = props;
+    let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)
     let inputTitulo = criaInputTitulo(notaAlterada);
     let textareaTexto = criaTextareaTexto(notaAlterada);
-    let buttonConcluido = criaButtonConcluir(props.adicionarNota, props.posicao , notaAlterada, formNotas);
-    let buttonRemover = criaButtonRemover(props.posicao, props.removerNota);
 
-
-    let formProps = {
-        className: 'note',
-    };
-
+    let props = { className: 'note' };  //não precisa mais formProps pq eu mudei os parâmetros do FormNotas, desestruturando em 5 variáveis.
     let children;
-    let onClick;
 
-    if (props.notaAtual = editando) {
+    if (notaAlterada.editando) {
+        let buttonConcluido = criaButtonConcluir(adicionarNota, posicao, notaAlterada);
+        let buttonRemover = criaButtonRemover(posicao, removerNota);
         children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido]
-
     } else {
         children = [inputTitulo, textareaTexto]
+        props.onClick = () => editarFormulario(props.posicao);
     }
 
-    formNotas = React.createElement(form, formProps, children);
-
-
-    return formNotas;
+    return React.createElement('form', props, children);
 }
 
 export default FormNotas;

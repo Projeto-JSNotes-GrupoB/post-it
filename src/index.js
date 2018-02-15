@@ -3,6 +3,7 @@ import ListaNotas from './listaNotas.js';
 // import FormTextarea from './components/formTextarea.js';
 // import FormButton from './components/formButton.js';
 import FormNotas from './components/formNotas.js';
+import SecaoNotas from './components/secaoNotas.js';
 
 let secao = document.getElementsByClassName('notes')[0];
 const observaMudancasNaLista = () => {
@@ -11,74 +12,80 @@ const observaMudancasNaLista = () => {
 
 const listaNotas = new ListaNotas(observaMudancasNaLista);
 
-const atualizarSecao = secao => {
-    // let conteudoSecao = "";
 
-    while (secao.firstChild) {
-        secao.removeChild(secao.firstChild);
-    }
+// const atualizarSecao = secao => {
+//     // let conteudoSecao = "";
 
-    for (let posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
-        let notaAtual = listaNotas.pega(posicao);
+//     while (secao.firstChild) {
+//         secao.removeChild(secao.firstChild);
+//     }
 
-        // let formNotas = document.createElement('form');
-        // formNotas.setAttribute('class', 'note');
+//     for (let posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
+//         let notaAtual = listaNotas.pega(posicao);
 
-        // let inputTitulo = new FormInput({
-        //     className: 'note__title',
-        //     type: 'text',
-        //     name: 'titulo',
-        //     placeholder: 'Título',
-        //     value: notaAtual.titulo
-        // });
+//         // let formNotas = document.createElement('form');
+//         // formNotas.setAttribute('class', 'note');
 
-        // let textareaTexto = new FormTextarea({
-        //     className: 'note__body', 
-        //     name: 'texto', 
-        //     placeholder: 'Criar uma nota...', 
-        //     children: notaAtual.texto
-        // });
+//         // let inputTitulo = new FormInput({
+//         //     className: 'note__title',
+//         //     type: 'text',
+//         //     name: 'titulo',
+//         //     placeholder: 'Título',
+//         //     value: notaAtual.titulo
+//         // });
 
-        // let buttonConcluido = new FormButton({
-        //     className: 'note__control', 
-        //     type: 'button', 
-        //     value: 'Concluído',
-        //     click: () => {
-        //         adicionarNota(formNotas, inputTitulo, textareaTexto, posicao);
-        //     }
-        // });
+//         // let textareaTexto = new FormTextarea({
+//         //     className: 'note__body', 
+//         //     name: 'texto', 
+//         //     placeholder: 'Criar uma nota...', 
+//         //     children: notaAtual.texto
+//         // });
 
-        // formNotas.appendChild(inputTitulo);
-        // formNotas.appendChild(textareaTexto);
-        // formNotas.appendChild(buttonConcluido);
+//         // let buttonConcluido = new FormButton({
+//         //     className: 'note__control', 
+//         //     type: 'button', 
+//         //     value: 'Concluído',
+//         //     click: () => {
+//         //         adicionarNota(formNotas, inputTitulo, textareaTexto, posicao);
+//         //     }
+//         // });
 
-        // if (notaAtual.editando) {
-        //     conteudoSecao += `<form class="note">
-        //                         <input class="note__title" type="text" name="titulo" value="${notaAtual.titulo}" placeholder="Título">
-        //                         <textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota...">
-        //                             ${notaAtual.texto}
-        //                         </textarea>
-        //                         <button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, ${posicao})">
-        //                             Concluído
-        //                         </button>
-        //                       </form>`;
-        // } else {
-        //     conteudoSecao += `<form class="note" onclick="editarFormulario(${posicao})">
-        //                         <button class="note__control" type="button" onclick="removerNota(event, ${posicao})">
-        //                             <i class="fa fa-times" aria-hidden="true"></i>
-        //                         </button>
-        //                         <h1 class="note__title">${notaAtual.titulo}</h1>
-        //                         <p class="note__body">${notaAtual.texto}</p>
-        //                       </form>`;
-        // }
+//         // formNotas.appendChild(inputTitulo);
+//         // formNotas.appendChild(textareaTexto);
+//         // formNotas.appendChild(buttonConcluido);
 
-        // property shorthand
-        const props = { posicao, notaAtual, editarFormulario, adicionarNota, removerNota };
-        secao.appendChild(new FormNotas(props));
-    }
+//         // if (notaAtual.editando) {
+//         //     conteudoSecao += `<form class="note">
+//         //                         <input class="note__title" type="text" name="titulo" value="${notaAtual.titulo}" placeholder="Título">
+//         //                         <textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota...">
+//         //                             ${notaAtual.texto}
+//         //                         </textarea>
+//         //                         <button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, ${posicao})">
+//         //                             Concluído
+//         //                         </button>
+//         //                       </form>`;
+//         // } else {
+//         //     conteudoSecao += `<form class="note" onclick="editarFormulario(${posicao})">
+//         //                         <button class="note__control" type="button" onclick="removerNota(event, ${posicao})">
+//         //                             <i class="fa fa-times" aria-hidden="true"></i>
+//         //                         </button>
+//         //                         <h1 class="note__title">${notaAtual.titulo}</h1>
+//         //                         <p class="note__body">${notaAtual.texto}</p>
+//         //                       </form>`;
+//         // }
 
-    // secao.innerHTML = conteudoSecao;
-}
+//         // property shorthand
+//         const props = { posicao, notaAtual, editarFormulario, adicionarNota, removerNota };
+//         secao.appendChild(new FormNotas(props));
+//     }
+
+//     // secao.innerHTML = conteudoSecao;
+// }
+
+// criar a secao de forms
+// listaNotas, formNotas, adicionarNota, removerNota, editarFormulario
+const props = {listaNotas, formNotas, adicionarNota, removerNota, editarFormulario};
+secao.appendChild(new SecaoNotas(props));
 
 window.editarFormulario = posicao => listaNotas.edita(posicao);
 
