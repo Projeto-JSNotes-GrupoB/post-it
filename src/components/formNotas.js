@@ -1,18 +1,19 @@
-import React from 'react';
-import Form from './form.js';
-import FormInput from './formInput.js';
-import FormTextarea from './formTextarea.js';
-import FormButton from './formButton.js';
+import React from 'react'
+import Nota from '../nota';
+import Form from './form';
+import FormInput from './formInput';
+import FormTextarea from './formTextarea';
+import FormButton from './formButton';
 
 
-function criaInputTitulo(notaAtual, notaAlterada) {
+function criaInputTitulo(notaAlterada) {
     const props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readOnly: !notaAtual.editando,
-        defaultValue: notaAtual.titulo,
+        readOnly: !notaAlterada.editando,
+        defaultValue: notaAlterada.titulo,
         onChange: event => {
             notaAlterada.titulo = event.target.value;
         }
@@ -35,15 +36,15 @@ function criaInputTitulo(notaAtual, notaAlterada) {
 //     return new FormInput(props);
 // };
 
-function criaTextareaTexto(notaAtual, notaAlterada) {
+function criaTextareaTexto(notaAlterada) {
     // immutable
     const props = {
         className: 'note__body',
         name: 'texto',
         placeholder: 'Criar uma nota...',
         rows: 5,
-        readOnly: notaAtual.editando ? false : true,
-        defaultValue: notaAtual.texto, //não precisa ser children para textarea
+        readOnly: notaAlterada.editando ? false : true,
+        defaultValue: notaAlterada.texto, //não precisa ser children para textarea
         onChange: (event) => {
             notaAlterada.titulo = event.target.value;
         }
@@ -66,16 +67,17 @@ function criaTextareaTexto(notaAtual, notaAlterada) {
 //     return new FormTextarea(props);
 // };
 
-function criaButtonConcluir({ posicao, nota, adicionarNota, salvarNota }, inputTitulo, textareaTexto, formNotas) {
+function criaButtonConcluir(adicionarNota, posicao, notaAlterada, formNotas) {
     // immutable
     const props = {
         className: 'note__control',
         type: 'button',
-        children: 'Concluído',
-        click: () => adicionarNota(inputTitulo, textareaTexto, formNotas, posicao)
-    };
+        onClick: () => adicionarNota(notaAlterada.titulo, notaAlterada.texto, formNotas, posicao)
+    }
+    const children = 'Concluído'
+    }
 
-    return React.createElement(FormButton, props, children);
+    return React.createElement(FormButton, props, children)
 };
 
 // const criaButtonConcluir = ({ posicao, nota, adicionarNota, salvarNota }, inputTitulo, textareaTexto, formNotas) => {
@@ -95,8 +97,13 @@ function criaButtonRemover(posicao, removerNota) {
     const props = {
         className: 'note__control',
         type: 'button',
-        children: '<i class="fa fa-times" aria-hidden="true"></i>',
-        click: event => removerNota(event, posicao)
+        onClick: event => removerNota(event, posicao)
+    };
+
+    const children = React.createElement('i', {
+        className: 'fa fa-times',
+       'aria-hidden': true, 
+        })
     };
 
     return React.createElement(FormButton, props);
@@ -139,14 +146,12 @@ function criaButtonRemover(posicao, removerNota) {
 //     let formNotas = new Form(props);
 
 
-
-
 function FormNotas(props) {
     let notaAlterada = new Nota(props.notaAtual.titulo, props.notaAtual.texto, props.notaAtual.editando)
-    let inputTitulo = criaInputTitulo(props.notaAtual, notaAlterada);
-    let textareaTexto = criaTextareaTexto(props.notaAtual, notaAlterada);
-    let buttonConcluido = criaButtonConcluir(propriedades, inputTitulo, textareaTexto, formNotas);
-    let buttonRemover = criaButtonRemover(propriedades, inputTitulo, textareaTexto, buttonConcluido);
+    let inputTitulo = criaInputTitulo(notaAlterada);
+    let textareaTexto = criaTextareaTexto(notaAlterada);
+    let buttonConcluido = criaButtonConcluir(props.adicionarNota, props.posicao , notaAlterada, formNotas);
+    let buttonRemover = criaButtonRemover(props.posicao, props.removerNota);
 
 
     let formProps = {
