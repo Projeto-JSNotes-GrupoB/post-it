@@ -3,7 +3,7 @@ import ListaNotas from '../listaNotas'
 import Section from './section'
 import FormNotas from './formNotas'
 
-function criaFormNotas(listaNotas, posicao, removerNota, dicionarNota, editarFormulario) {
+function criaFormNotas(posicao, listaNotas, formNotas, adicionarNota, removerNota, editarFormulario) {
     const props = {
         posicao: posicao,
         notaAtual: listaNotas.pega(posicao),
@@ -15,18 +15,19 @@ function criaFormNotas(listaNotas, posicao, removerNota, dicionarNota, editarFor
 }
 
 
-function SecaoNotas({ listaNotas, formNotas, adicionarNota, removerNota, editarFormulario }) { // destructuring
+function SecaoNotas({ listaNotas, adicionarNota, removerNota, editarFormulario }) { // destructuring
     const props = { className: 'notes' };
-    let children = [];
+    
+    // for (let posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
+    //     const props = {
+    //         className: 'notes',
+    //     }
 
-    for (let posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
-        const props = {
-            className: 'notes',
-        }
+    //     let formNotas = criaFormNotas(posicao, props);
+    //     children.push(formNotas);
+    // }
 
-        let formNotas = React.createElement(FormNotas, props);
-        children.push(formNotas);
-    }
+    let children = props.listaNotas.map((notaAtual, posicao) => criarFormNotas(posicao, listaNotas, formNotas, adicionarNota, removerNota, editarFormulario));
 
     return React.createElement(Section, props, children)
 }

@@ -1,16 +1,14 @@
-import ListaNotas from './listaNotas.js';
-// import FormInput from './components/formInput.js';
-// import FormTextarea from './components/formTextarea.js';
-// import FormButton from './components/formButton.js';
-import FormNotas from './components/formNotas.js';
-import SecaoNotas from './components/secaoNotas.js';
+import React from 'react'
+import ReactDom from 'react-dom'
+import Page from './components/secaoNotas'
 
-let secao = document.getElementsByClassName('notes')[0];
-const observaMudancasNaLista = () => {
-    atualizarSecao(secao);
-};
 
-const listaNotas = new ListaNotas(observaMudancasNaLista);
+// let secao = document.getElementsByClassName('notes')[0];
+// const observaMudancasNaLista = () => {
+//     atualizarSecao(secao);
+// };
+
+// const listaNotas = new ListaNotas(observaMudancasNaLista);
 
 
 // const atualizarSecao = secao => {
@@ -84,21 +82,10 @@ const listaNotas = new ListaNotas(observaMudancasNaLista);
 
 // criar a secao de forms
 // listaNotas, formNotas, adicionarNota, removerNota, editarFormulario
-const props = {listaNotas, formNotas, adicionarNota, removerNota, editarFormulario};
-secao.appendChild(new SecaoNotas(props));
+// const props = {listaNotas, formNotas, adicionarNota, removerNota, editarFormulario};
+// secao.appendChild(new SecaoNotas(props));
 
-window.editarFormulario = posicao => listaNotas.edita(posicao);
-
-window.adicionarNota = (inputTitulo, textareaTexto, formulario, posicao) => {
-    if (listaNotas.pega(posicao)) {
-        listaNotas.salva(posicao, inputTitulo.value, textareaTexto.value);
-    } else {
-        listaNotas.adiciona(inputTitulo.value, textareaTexto.value);
-        formulario.reset();
-    }
-}
-
-window.removerNota = (evento, posicao) => {
-    evento.stopPropagation();
-    listaNotas.remove(posicao);
-}
+ReactDOM.render(        
+    React.createElement(Page, null),
+    document.getElementById('root')
+)
