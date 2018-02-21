@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactDom from 'react-dom'
-import Page from './components/secaoNotas'
+import ReactDOM from 'react-dom'
+import Page from './components/page'
 
 
 // let secao = document.getElementsByClassName('notes')[0];

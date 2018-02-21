@@ -1,9 +1,8 @@
 import React from 'react'
 
-export default props => React.createElement('textarea', props)
+const FormTextarea = props => <textarea {...props}/>
 
-
-
+export default FormTextarea
 
 // // props param
 // function FormTextarea(props) {
@@ -19,7 +18,7 @@ export default props => React.createElement('textarea', props)
 //     if (props.readonly) {
 //         formTextarea.setAttribute('readonly', true);
 //     }
-    
+
 //     formTextarea.innerHTML = props.children;
 
 //     return formTextarea;

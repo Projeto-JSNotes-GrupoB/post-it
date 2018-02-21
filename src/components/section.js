@@ -1,3 +1,12 @@
 import React from 'react'
 
-export default (props, children) => React.createElement('section', props, children)
+const Section = ({ children, ...props }) => (
+    <section  {...props}>
+        {children}
+    </section>
+)
+export default Section
+
+
+
+

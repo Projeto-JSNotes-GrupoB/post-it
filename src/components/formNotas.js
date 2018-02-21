@@ -6,21 +6,25 @@ import FormTextarea from './formTextarea';
 import FormButton from './formButton';
 
 
-function criaInputTitulo(notaAlterada) {
+function criaInputTitulo(notaAlterada, posicao) {
     const props = {
+        key: 'note-title',
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readOnly: !notaAlterada.editando,
         defaultValue: notaAlterada.titulo,
         onChange: event => {
             notaAlterada.titulo = event.target.value;
         }
+    };
+    console.log(notaAlterada)
+    if (posicao !== null && !notaAlterada.editando) {
+        props.readOnly = true;
     }
+
     return React.createElement(FormInput, props)
 }
-
 
 // const criaInputTitulo = ({ notaAtual }) => {
 //     // immutable
@@ -36,19 +40,23 @@ function criaInputTitulo(notaAlterada) {
 //     return new FormInput(props);
 // };
 
-function criaTextareaTexto(notaAlterada) {
+function criaTextareaTexto(notaAlterada, posicao) {
     // immutable
     const props = {
+        key: 'note-text',
         className: 'note__body',
         name: 'texto',
         placeholder: 'Criar uma nota...',
         rows: 5,
-        readOnly: notaAlterada.editando ? false : true,
         defaultValue: notaAlterada.texto, //não precisa ser children para textarea
-        onChange: (event) => {
-            notaAlterada.titulo = event.target.value;
+        onChange: event => {
+            notaAlterada.texto = event.target.value;
         }
     };
+
+    if (posicao !== null && !notaAlterada.editando) {
+        props.readOnly = true;
+    }
 
     return React.createElement(FormTextarea, props)
 }
@@ -70,6 +78,7 @@ function criaTextareaTexto(notaAlterada) {
 function criaButtonConcluir(adicionarNota, posicao, notaAlterada) {
     // immutable
     const props = {
+        key: 'note-control-concluir',
         className: 'note__control',
         type: 'button',
         onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, posicao) // target guarda a tag que sofreu o evento
@@ -93,6 +102,7 @@ function criaButtonConcluir(adicionarNota, posicao, notaAlterada) {
 function criaButtonRemover(posicao, removerNota) {
     // immutable
     const props = {
+        key: 'note-control-remover',
         className: 'note__control',
         type: 'button',
         onClick: event => removerNota(event, posicao)
@@ -144,23 +154,34 @@ function criaButtonRemover(posicao, removerNota) {
 
 function FormNotas({ notaAtual, posicao, adicionarNota, removerNota, editarFormulario }) { // destructuring do props
     // const {notaAtual,posicao, adicionarNota, removerNota, editarFormulario} = props;
-    let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)
-    let inputTitulo = criaInputTitulo(notaAlterada);
-    let textareaTexto = criaTextareaTexto(notaAlterada);
+    let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando, posicao)
+    let inputTitulo = criaInputTitulo(notaAlterada, posicao);
+    let textareaTexto = criaTextareaTexto(notaAlterada, posicao);
+    let buttonConcluido = criaButtonConcluir(adicionarNota, posicao, notaAlterada);
+    let buttonRemover = criaButtonRemover(posicao, removerNota);
 
     let props = { className: 'note' };  //não precisa mais formProps pq eu mudei os parâmetros do FormNotas, desestruturando em 5 variáveis.
-    let children;
+    // let children;
 
-    if (notaAlterada.editando) {
-        let buttonConcluido = criaButtonConcluir(adicionarNota, posicao, notaAlterada);
-        let buttonRemover = criaButtonRemover(posicao, removerNota);
-        children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido]
-    } else {
-        children = [inputTitulo, textareaTexto]
-        props.onClick = () => editarFormulario(props.posicao);
-    }
 
-    return React.createElement('form', props, children);
+    // if (notaAlterada.posicao === undefined) {
+    //     //template da nova nota
+    //     children = [inputTitulo, textareaTexto, buttonConcluido];
+    // } else if (notaAlterada.editando) {
+    //     //template pra nota existente editando
+    //     children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido];
+    // } else {
+    //     children = [inputTitulo, textareaTexto];
+    //     props.onClick = () => editarFormulario(props.posicao);
+    // }
+
+return (
+    <Form {...props}>
+        {posicao !==undefined && notaAlterada.editando && ButtonRemover}
+        {inputTitulo}
+        {textareaTexto}
+        {(posicao !==undefined || notaAlterada.editando) && buttonConcluido}
+    </Form>
+)
 }
-
 export default FormNotas;
